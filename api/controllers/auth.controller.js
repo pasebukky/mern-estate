@@ -22,7 +22,7 @@ export const signin = async (req, res, next) => {
        if (!validUser) return next(errorHandler(404, 'User not found'));
        const validPassword = bcryptjs.compareSync(password, validUser.password);
        if (!validPassword) return next(errorHandler(401, 'Wrong email or password'));
-       const token = jwt.sign({ id: validPassword.id}, process.env.JWT_SECRET);
+       const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
        const { password: pass, ...remainingInfo } = validUser._doc;
        res.cookie('access_token', token, { httpOnly: true}).status(200).json(remainingInfo);
     } catch (error) {
@@ -47,7 +47,7 @@ export const google = async (req, res, next) => {
                 avatar: req.body.photo,
             });
             await newUser.save();
-            const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET);
+            const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
             const { password: pass,...remainingInfo } = newUser._doc;
             res.cookie('access_token', token, { httpOnly: true }).status(200).json(remainingInfo);
         }
