@@ -22,9 +22,21 @@ const userSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        updateUserStart: (state) => {
+            state.loading = true;
+        },
+        updateUserSuccess: (state, action) => {
+            state.loading = false;
+            state.currentUser = action.payload;
+            state.error = null;
+        },
+        updateUserFailure: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        },
     },
 }); 
 
-export const { signInStart, signInSuccess, signInFailure } = userSlice.actions; // the actions should be exported for usage in the components.
+export const { signInStart, signInSuccess, signInFailure, updateUserFailure, updateUserStart, updateUserSuccess } = userSlice.actions; // the actions should be exported for usage in the components.
 
 export default userSlice.reducer;  // Export the reducer function for usage in the Redux store.
