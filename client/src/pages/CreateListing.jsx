@@ -11,7 +11,7 @@ export default function CreateListing() {
     const [uploading, setUploading] = useState(false)
     console.log(formData)
     
-    const handleImageSubmit = (e) => {
+    const handleImageSubmit = () => {
         if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
           setUploading(true)
           const promises = [];
@@ -28,7 +28,7 @@ export default function CreateListing() {
               setImageUploadError(false);
               setUploading(false)
             })
-            .catch((err) => {
+            .catch(() => {
               setImageUploadError('Image upload failed (2 mb max per image)');
              
             });
